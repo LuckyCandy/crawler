@@ -7,7 +7,7 @@ from selenium.webdriver.chrome.service import Service
 from common.fatal_exception import FatalException
 
 
-class ChromeBrowserDriver(object):
+class ChromeBrowserDriverHelper(object):
     def __int__(self, driver_path):
         pass
 
@@ -21,7 +21,7 @@ class ChromeBrowserDriver(object):
 
     @staticmethod
     def get_with_options(driver_path: str, options: Options) -> WebDriver:
-        if not driver_path or os.path.exists(driver_path):
+        if not driver_path or not os.path.exists(driver_path):
             raise FatalException("chrome driver file not exists, you can visit site ["
                                  "https://chromedriver.chromium.org/downloads] to download")
         chrome_service = Service(driver_path)
@@ -37,4 +37,8 @@ class ChromeBrowserDriver(object):
         options.add_argument(
             'user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
             'Chrome/80.0.3987.149 Safari/537.36')
-        return ChromeBrowserDriver.get_with_options(driver_path, options)
+        return ChromeBrowserDriverHelper.get_with_options(driver_path, options)
+
+    @staticmethod
+    def get_options() -> Options:
+        return webdriver.ChromeOptions()

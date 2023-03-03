@@ -2,4 +2,4 @@ chromedriver
 venv/
 .idea
 logs/*
-
+*.pyc

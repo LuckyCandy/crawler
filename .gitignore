@@ -1,2 +1,5 @@
 chromedriver
 venv/
+.idea
+logs/*
+

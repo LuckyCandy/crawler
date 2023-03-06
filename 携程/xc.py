@@ -1,8 +1,13 @@
+import os.path
+
 import requests
 from selenium import webdriver
 import time
 from selenium.webdriver.common.by import By
 import openpyxl
+
+from common import settings
+from utils.chrome_driver import ChromeBrowserDriverHelper
 
 '''爬取携程票价信息'''
 
@@ -10,21 +15,19 @@ import openpyxl
 excel = openpyxl.Workbook()
 
 # 初始化Driver
-options = webdriver.ChromeOptions()
-options.add_experimental_option('detach', True)
+options = ChromeBrowserDriverHelper.get_options()
 options.add_argument('--start-maximized')
+options.add_argument('--headless')
 options.add_argument("--disable-popup-blocking")
-driver = webdriver.Chrome('/chromedriver', options=options)
+options.add_argument('--user-agent=Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 ('
+                     'KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1')
+driver = ChromeBrowserDriverHelper.get_with_options(settings.CHROME_DRIVER_PATH, options)
 
 # 出发日期
-date_arr = ['2023-03-31', '2023-03-15', '2023-03-08', '2023-03-04']
+date_arr = ['2023-03-31']
 # 目的地
 dst_dict = {
-    "TSN": "天津", "BJS": "北京", "TAO": "青岛", "SIA": "西安", "LHW": "兰州", "KHN": "南昌", "CAN": "广州",
-    "HGH": "杭州",
-    "NKG": "南京", "SZV": "苏州", "SHA": "上海", "FOC": "福州", "XMN": "厦门", "CGQ": "长春", "SHE": "沈阳",
-    "SJW": "石家庄",
-    "CGO": "郑州", "TYN": "太原"
+    "TSN": "天津"
 }
 
 # 首个sheet无需创建
@@ -70,7 +73,7 @@ for date in date_arr:
             cur_sheet.append([flight_airline, dst_dict[dst] + plane_dl, plane_al, plane_dt, plane_at, Price, Discount])
             print([flight_airline, dst_dict[dst] + plane_dl, plane_al, plane_dt, plane_at, Price, Discount])
     sheet_count += 1
-excel.save("携程各地飞往重庆票价.xlsx")
+excel.save(os.path.join(settings.RESOURCE_PATH, "携程各地飞往重庆票价.xlsx"))
 
 
 

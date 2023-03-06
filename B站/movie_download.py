@@ -4,14 +4,14 @@ from selenium.webdriver.common.by import By
 from utils.chrome_driver import ChromeBrowserDriverHelper
 from utils.logger import get_logger
 from utils.downloader import Downloader
+from common import settings
 
 '''
-download_url: B站网页地址【视频观看页面】
+download_url: B站网页地址【视频观看页面,mobile端m.bilibili.com】
 chrome_driver_path: chrome浏览器驱动
 '''
 download_url = 'https://m.bilibili.com/video/BV1XQ4y1d7BB/?spm_id_from=333.337.search-card.all.click&vd_source' \
                '=daa8c9c63a701936aff9e99505684e67 '
-chrome_driver_path = 'D:\\Downloads\\chromedriver.exe'
 
 # 以下内容可选择性修改
 log = get_logger('bilibili')
@@ -22,7 +22,7 @@ options.add_argument('--headless')
 options.add_argument('--user-agent=Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 ('
                      'KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1')
 options.add_argument("--mute-audio")
-driver = ChromeBrowserDriverHelper.get_with_options(chrome_driver_path, options)
+driver = ChromeBrowserDriverHelper.get_with_options(settings.CHROME_DRIVER_PATH, options)
 
 driver.get(download_url)
 log.info('开始请求.....')

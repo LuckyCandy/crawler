@@ -9,3 +9,7 @@ LOF_FILE_BACKUP_CNT = 5
 
 # 资源文件路径
 RESOURCE_PATH = '../resource'
+
+# Chrome浏览器驱动
+CHROME_DRIVER_PATH = '../chromedriver'
+
